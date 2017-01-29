@@ -1,5 +1,5 @@
 import * as ko from 'knockout'
-import QuoteVM from './quote'
+import QuoteVM from '../quote'
 import * as fs from 'fs'
 import { quote } from '../../api'
 

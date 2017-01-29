@@ -1,5 +1,5 @@
 // Register all components
-import './vm'
+import './components'
 
 // Bind components to view
 import * as ko from 'knockout'
