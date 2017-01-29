@@ -7,11 +7,11 @@ const isProduction = process.env.NODE_ENV === 'production'
 const handler: ErrorRequestHandler = (error: Error | StatusError | any, _, res) => {
   if (error instanceof StatusError) {
     res
-      .status(error.code)
+      .status(error.status)
       .json({ message: error.message })
 
-    logger.error(error.message)
-    logger.error(error.stack)
+    logger.warn(error.message)
+    logger.warn(error.stack)
     return
   }
 
