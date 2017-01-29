@@ -13,6 +13,8 @@ declare namespace Schema {
 
         /** JSON Array of strings */
         quote: string;
+
+        votes: number;
     }
 
     interface QuoteRevision {
@@ -36,6 +38,7 @@ declare namespace Geddit {
         lastUpdated: Date;
         dateCreated: Date;
         quote: string[];
+        votes: number;
         createdBy: string;
     }
 

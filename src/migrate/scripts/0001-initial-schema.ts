@@ -6,6 +6,7 @@ export async function up(db: Knex) {
     table.string('id').primary().index()
     table.dateTime('lastUpdated').index()
     table.dateTime('dateCreated').index()
+    table.bigInteger('votes')
     table.string('createdBy')
     table.string('quote')
   })
