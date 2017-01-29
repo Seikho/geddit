@@ -1,0 +1,35 @@
+{
+  "name": "geddit",
+  "version": "0.0.1",
+  "description": "Geddit.LOL Backend",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "node node_modules/typescript/bin/tsc",
+    "premigrate": "npm run build",
+    "migrate": "node -e \"require('./src/migrate').migrate()\"",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1000team/geddit.git"
+  },
+  "author": "Carl Winkler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/1000team/geddit/issues"
+  },
+  "homepage": "https://github.com/1000team/geddit#readme",
+  "devDependencies": {
+    "@types/express": "^4.0.35",
+    "@types/knex": "0.0.40",
+    "@types/node": "^7.0.4",
+    "tslint": "^4.4.2",
+    "tslint-config-standard": "^3.0.0",
+    "typescript": "^2.1.5"
+  },
+  "dependencies": {
+    "express": "^4.14.1",
+    "knex": "^0.12.6",
+    "sqlite3": "^3.1.8"
+  }
+}
