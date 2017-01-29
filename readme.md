@@ -18,7 +18,7 @@ npm run migrate
 ### Compiling
 
 ```
-npm run build
+npm run build:bundle
 ```
 
 
@@ -26,5 +26,7 @@ npm run build
 
 ```
 npm start
+# or
+node .
 ```
 
