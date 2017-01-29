@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node node_modules/typescript/bin/tsc",
     "bundle": "browserify -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
+    "build:bundle": "node node_modules/typescript/bin/tsc && node node_modules/browserify/bin/cmd -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "migrate": "node -e \"require('./src/migrate').migrate()\"",
     "test": "mocha"
   },
