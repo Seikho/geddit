@@ -9,7 +9,8 @@
     "bundle": "browserify -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "build:bundle": "node node_modules/typescript/bin/tsc && node node_modules/browserify/bin/cmd -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "migrate": "node -e \"require('./src/migrate').migrate()\"",
-    "test": "mocha"
+    "test": "mocha",
+    "watch": "nodemon -e js --watch src/index.js src/index.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "@types/node": "^7.0.4",
     "@types/whatwg-fetch": "0.0.33",
     "browserify": "^14.0.0",
+    "nodemon": "^1.11.0",
     "tslint": "^4.4.2",
     "tslint-config-standard": "^3.0.0",
     "typescript": "^2.1.5"
