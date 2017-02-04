@@ -1,2 +1,4 @@
-export { default as QuoteVM } from './quote'
-export { default as QuoteListVM } from './quote-list'
+import './quote'
+import './quote-list'
+import './head'
+import './body'

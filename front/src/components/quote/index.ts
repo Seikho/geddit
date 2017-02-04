@@ -16,7 +16,8 @@ class QuoteVM {
       .join('\n')
   })
 
-  constructor(quote: Schema.Quote) {
+  constructor(params: { quote: Schema.Quote }) {
+    const quote = params.quote
     this.id(quote.id)
     this.createdBy(quote.createdBy)
     this.dateCreated(new Date(quote.dateCreated))
