@@ -1,3 +1,9 @@
+declare module 'compression' {
+    namespace api {}
+    function api(): any;
+    export = api;
+}
+
 declare namespace Schema {
     interface Quote {
         id: number;
