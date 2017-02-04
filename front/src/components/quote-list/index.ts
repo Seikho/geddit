@@ -1,11 +1,10 @@
 import * as ko from 'knockout'
-import QuoteVM from '../quote'
 import * as fs from 'fs'
 import { quote } from '../../api'
 
 class QuoteListVM {
 
-  quotes = ko.observableArray<QuoteVM>([])
+  quotes = ko.observableArray<Schema.Quote>([])
 
   constructor(public page: number = 1, public pageSize: number = 10) {
     this.getQuotes()
@@ -15,7 +14,7 @@ class QuoteListVM {
     const quotes = await quote.getMany(this.page, this.pageSize)
     this.quotes.destroyAll()
     for (const quote of quotes) {
-      this.quotes.push(new QuoteVM(quote))
+      this.quotes.push(quote)
     }
   }
 
