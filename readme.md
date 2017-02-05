@@ -15,6 +15,15 @@ npm install
 npm run migrate
 ```
 
+### Creating a user
+```
+node ./src/auth/create {username} {password}
+
+E.g.
+
+node ./src/auth/create seikho sUpErSeCRITPaSSWoRD
+```
+
 ### Compiling
 
 ```
@@ -29,4 +38,5 @@ npm start
 # or
 node .
 ```
+
 
