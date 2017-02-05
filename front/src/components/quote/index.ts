@@ -9,6 +9,14 @@ class QuoteVM {
   lastUpdated = ko.observable(new Date())
   quote = ko.observableArray([])
   votes = ko.observable(0)
+  isApprovable = ko.observable(false)
+  isApproved = ko.observable(true)
+  hideQuote = ko.observable(false)
+  byline = ko.computed(() => {
+    const by = this.createdBy()
+    const submitted = new Date(this.dateCreated()).toUTCString().slice(4, 46)
+    return `Submitted by ${by} at ${submitted}`
+  })
 
   quoteText = ko.computed(() => {
     return this
@@ -16,7 +24,7 @@ class QuoteVM {
       .join('\n')
   })
 
-  constructor(params: { quote: Schema.Quote }) {
+  constructor(params: { quote: Schema.Quote & Object }) {
     const quote = params.quote
     this.id(quote.id)
     this.createdBy(quote.createdBy)
@@ -24,26 +32,52 @@ class QuoteVM {
     this.lastUpdated(new Date(quote.lastUpdated))
     this.quote(JSON.parse(quote.quote))
     this.votes(quote.votes)
+    this.isApprovable(quote.hasOwnProperty('approved'))
+    this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
   }
 
   voteUp = async () => {
     if (this.getVoteState() === Voted.Up) {
       return
     }
-
-    await fetch(`/quote/${this.id()}/up`, { method: 'PUT' })
-    this.votes(this.votes() + 1)
-    store.set(this.getVoteKey(), 'up')
+    this.castVote('up')
   }
 
   voteDown = async () => {
     if (this.getVoteState() === Voted.Down) {
       return
     }
+    this.castVote('down')
+  }
 
-    await fetch(`/quote/${this.id()}/down`, { method: 'PUT' })
-    this.votes(this.votes() - 1)
-    store.set(this.getVoteKey(), 'down')
+  castVote = async (kind: 'up' | 'down') => {
+    if (kind !== 'up' && kind !== 'down') {
+      return
+    }
+
+    const adjustment = kind === 'up' ? 1 : -1
+    const result = await fetch(`/quote/${this.id()}/${kind}`, { method: 'PUT', credentials: 'include' })
+    if (result.status !== 200) {
+      return
+    }
+    this.votes(this.votes() + adjustment)
+    store.set(this.getVoteKey(), kind)
+  }
+
+  allow = () => {
+    return this.setAllowed('allow')
+  }
+
+  disallow = async () => {
+    return this.setAllowed('disallow')
+  }
+
+  setAllowed = async (kind: 'allow' | 'disallow') => {
+    const url = `/quote/${this.id()}/${kind}`
+    const result = await fetch(url, { method: 'PUT', credentials: 'include' })
+    if (result.status === 200) {
+      this.hideQuote(true)
+    }
   }
 
   getVoteState(): Voted {

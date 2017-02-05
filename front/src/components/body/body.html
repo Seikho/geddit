@@ -8,13 +8,22 @@
           <a class="navbar-brand">Geddit.LOL</a>
 
           <!-- ko foreach: navItems -->
-          <ge-link class="btn btn-link" params="href: url">
-            <span data-bind="text: name"></span>
+          <span data-bind="visible: display">
+            <ge-link class="btn btn-link" params="href: url">
+              <span data-bind="text: name"></span>
           </ge-link>
+          </span>
           <!-- /ko -->
         </section>
 
         <section class="navbar-section">
+          <span data-bind="visible: isAuthenticated">
+            <ge-link class="btn btn-link" params="href: '/unapproved'">unapproved</ge-link>
+            <ge-link class="btn btn-link" params="href: '/logout'">logout</ge-link>
+          </span>
+          <span data-bind="ifnot: isAuthenticated">
+            <ge-link class="btn btn-link" params="href: '/login'">login</ge-link>
+          </span>
           <div class="input-group input-inline">
             <input class="form-input" type="text" placeholder="search" />
             <button class="btn btn-primary input-group-btn">Search</button>

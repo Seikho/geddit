@@ -1,14 +1,18 @@
 import db, { QUOTE } from '../../store'
 import { RequestHandler } from 'express'
 import { StatusError } from '../error'
-import toDto from './to-dto'
 
 const handler: RequestHandler = async (req, res, next) => {
   const id = req.params.id
+  const status = req.params.status
+
+  if (status !== 'allow' && status !== 'disallow') {
+    return next()
+  }
+
   const quote: Schema.Quote | undefined = await db(QUOTE)
-    .select()
+    .select('id')
     .where('id', id)
-    .andWhere('approved', true)
     .first()
 
   if (!quote) {
@@ -17,7 +21,19 @@ const handler: RequestHandler = async (req, res, next) => {
     return
   }
 
-  res.json(toDto(quote, req.signedCookies))
+  if (status === 'disallow') {
+    await db(QUOTE)
+      .delete()
+      .where('id', id)
+  } else {
+    await db(QUOTE)
+      .update('approved', true)
+      .where('id', id)
+  }
+
+  res
+    .status(200)
+    .end()
 }
 
 export default handler

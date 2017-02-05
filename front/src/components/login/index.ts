@@ -39,6 +39,7 @@ class LoginVM {
     if (result.status === 200) {
       window.history.pushState({}, 'Geddit.LOL', '/unapproved')
       window.dispatchEvent(new Event('push-state'))
+      window.dispatchEvent(new Event('authenticated'))
       return
     }
 
