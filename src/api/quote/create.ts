@@ -18,6 +18,7 @@ const handler: RequestHandler = async (req, res, next) => {
   const votes = 0
 
   const record: Partial<Schema.Quote> = {
+    createdBy,
     lastUpdated: date,
     dateCreated: date,
     votes,
