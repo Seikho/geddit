@@ -22,6 +22,12 @@ export async function up(db: Knex) {
     table.string('updatedBy')
     table.string('quote')
   })
+
+  await db.schema.createTable(tables.USER, table => {
+    table.increments('id').primary().index()
+    table.string('username').unique().index()
+    table.string('hashedPassword')
+  })
 }
 
 export async function down(_: Knex) {
