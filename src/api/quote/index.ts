@@ -1,11 +1,20 @@
 import { Router } from 'express'
 import getOne from './one'
-import getMany from './many'
+import getLatest from './latest'
+import getOldest from './oldest'
+import getRandom from './random'
+import getTop from './top'
 import paging from '../paging'
+import create from './create'
 
 const router = Router()
 
-router.use('/:id', getOne)
-router.use('/', paging, getMany)
+router.get('/random', getRandom)
+router.get('/top', paging, getTop)
+router.get('/oldest', paging, getOldest)
+router.get('/latest', paging, getLatest)
+router.get('/:id', getOne)
+router.get('/', paging, getLatest)
+router.post('/', create)
 
 export default router
