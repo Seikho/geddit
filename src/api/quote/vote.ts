@@ -1,6 +1,7 @@
 import db, { QUOTE } from '../../store'
 import { RequestHandler } from 'express'
 import { StatusError } from '../error'
+import toDto from './to-dto'
 
 const handler: RequestHandler = async (req, res, next) => {
   const id = req.params.id
@@ -30,9 +31,8 @@ const handler: RequestHandler = async (req, res, next) => {
     .update('votes', votes)
     .where('id', id)
 
-  // TODO: Use map to DTO prior to responding
   quote.votes = votes
-  res.json(quote)
+  res.json(toDto(quote, req.signedCookies))
 }
 
 export default handler
