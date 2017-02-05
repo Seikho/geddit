@@ -2,7 +2,6 @@ import * as express from 'express'
 import * as compression from 'compression'
 import * as path from 'path'
 import * as bodyParser from 'body-parser'
-import { StatusError } from './api/error'
 import api from './api'
 import errorHandler from './error-handler'
 
@@ -31,9 +30,9 @@ app.use('/', api)
 app.use(express.static(staticPath))
 
 // 404 handler
-app.use('/', (_, __, next) => {
-  const error = new StatusError('Resource not found', 404)
-  next(error)
+app.use('/', (_, res) => {
+  res.status(404)
+  res.sendFile(path.resolve(staticPath, 'index.html'))
   return
 })
 

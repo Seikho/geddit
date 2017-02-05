@@ -14,14 +14,18 @@ class BodyVM {
     { name: 'oldest', component: 'ge-quote-list', paths: ['/oldest'], url: '/oldest' },
     { name: 'random', component: 'ge-quote-list', paths: ['/random'], url: '/random' },
     { name: 'top', component: 'ge-quote-list', paths: ['/top'], url: '/top' },
-    { name: 'add quote', component: 'ge-add-quote', paths: ['add-quote'], url: '/add-quote' }
+    { name: 'add quote', component: 'ge-add-quote', paths: ['/add-quote'], url: '/add-quote' }
   ])
 
-  notFoundItem = { name: 'Not Found', component: 'not-Found', paths: [], url: '/not-found' }
+  notFoundItem = { name: 'Not Found', component: 'ge-not-found', paths: [], url: '/not-found' }
   currentItem = ko.observable<NavItem>(this.navItems()[0])
 
   constructor() {
     window.addEventListener('push-state', () => {
+      this.navigate()
+    })
+
+    window.addEventListener('popstate', () => {
       this.navigate()
     })
 
