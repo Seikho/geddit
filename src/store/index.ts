@@ -10,5 +10,6 @@ const db = knex({
 
 export const QUOTE = 'Quote'
 export const QUOTE_REVISION = 'QuoteRevision'
+export const USER = 'User'
 
 export default db

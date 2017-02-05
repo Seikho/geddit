@@ -14,4 +14,6 @@ export async function migrate(config: { knex?: Knex } = {}) {
 
   const endMigration = await db.migrate.currentVersion()
   logger.log(`Migrated to: ${endMigration}`)
+
+  process.exit(0)
 }

@@ -1,11 +1,33 @@
-<div class="quote">
-  <div class="quote__head">
-    #<span data-bind="text: id"></span>
-    <span data-bind="click: voteUp">+</span> (
-    <span data-bind="text: votes"></span>)
-    <span data-bind="click: voteDown">-</span>
+<div class="card" style="margin: 2px" data-bind="visible: !hideQuote()">
+  <div class="card-header">
+    <strong>
+    Quote #<span data-bind="text: id"></span>
+      <span class="quote__vote" data-bind="click: voteUp">+</span>
+    </strong> 
+    (<span data-bind="text: votes"></span>)
+    <strong>
+      <span class="quote__vote" data-bind="click: voteDown">-</span>
+    </strong>
+
+    <span data-bind="if: isApprovable() && !isApproved()">
+      <span class="quote__approve label label-success" data-bind="click: allow">✔</span>
+    </span>
+
+    <span data-bind="if: isApprovable">
+      <span class="quote__approve label label-danger" data-bind="click: disallow">✘</span>
+    </span>
+
   </div>
-  <div class="quote__body">
-    <pre data-bind="text: quoteText"></pre>
+  <div class="card-body" style="padding-top: 3px">
+    <pre data-bind="text: quoteText" style="padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px"></pre>
+  </div>
+  <div class="card-footer">
+    <em data-bind="text: byline"></em>
   </div>
 </div>
+
+<style>
+  .quote__vote, .quote__approve {
+    cursor: pointer
+  }
+</style>

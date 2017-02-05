@@ -6,6 +6,6 @@
   "isShellCommand": true,
   "args": ["run", "build:bundle"],
   "showOutput": "silent",
-  "isWatching": false,
+  "isBackground": false,
   "problemMatcher": "$tsc"
 }

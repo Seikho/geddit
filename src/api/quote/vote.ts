@@ -5,6 +5,13 @@ import toDto from './to-dto'
 
 const handler: RequestHandler = async (req, res, next) => {
   const id = req.params.id
+  const direction = req.params.direction
+
+  if (direction !== 'up' && direction !== 'down') {
+    const error = new StatusError('Invalid vote cast', 400)
+    return next(error)
+  }
+
   const quote: Schema.Quote | undefined = await db(QUOTE)
     .select()
     .where('id', id)
@@ -17,6 +24,14 @@ const handler: RequestHandler = async (req, res, next) => {
     return
   }
 
+  const change = direction === 'up' ? 1 : -1
+  const votes = quote.votes + change
+
+  await db(QUOTE)
+    .update('votes', votes)
+    .where('id', id)
+
+  quote.votes = votes
   res.json(toDto(quote, req.signedCookies))
 }
 

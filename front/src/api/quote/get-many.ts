@@ -1,4 +1,5 @@
-export default async function getOne(page: number = 1, pageSize: number = 10): Promise<Schema.Quote[]> {
-  const res = await fetch(`/quote?page=${page}&pageSize=${pageSize}`)
+export default async function getMany(page: number = 1, pageSize: number = 10, path?: string): Promise<Schema.Quote[]> {
+  const url = `/quote${path}?page=${page}&pageSize=${pageSize}`
+  const res = await fetch(url, { credentials: 'include' })
   return res.json()
 }

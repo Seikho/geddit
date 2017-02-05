@@ -1,13 +1,3 @@
 <div data-bind="foreach: quotes">
-  <div class="quote">
-    <div class="quote__head">
-      #<span data-bind="text: id"></span>
-      <a href='#' data-bind="click: voteUp">+</a>
-      (<span data-bind="text: votes"></span>)
-      <a href='#' data-bind="click: voteDown">-</a>
-    </div>
-    <div class="quote__body">
-      <pre data-bind="text: quoteText"></pre>
-    </div>
-  </div>
+  <ge-quote params="quote: $data"></ge-quote>
 </div>
