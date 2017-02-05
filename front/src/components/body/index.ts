@@ -67,6 +67,13 @@ class BodyVM {
       paths: ['/unapproved'],
       url: '/unapproved',
       display: false
+    },
+    {
+      name: 'my account',
+      component: 'ge-account',
+      paths: ['/my-account'],
+      url: 'my-account',
+      display: false
     }
   ])
 

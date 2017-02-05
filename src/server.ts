@@ -38,7 +38,8 @@ const frontEndRoutes = [
   '/add-quote',
   '/login',
   '/logout',
-  '/unapproved'
+  '/unapproved',
+  '/my-account'
 ]
 
 for (const route of frontEndRoutes) {
