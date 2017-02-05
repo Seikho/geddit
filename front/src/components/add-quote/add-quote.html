@@ -1,12 +1,14 @@
 <h3>Submit a Quote</h3>
-<div class="form-group">
-  <label class="form-label">Name</label>
-  <input class="form-input" data-bind="textInput: createdBy" />
-</div>
+<form data-bind="submit: submit">
+  <div class="form-group">
+    <label class="form-label">Name</label>
+    <input class="form-input" data-bind="textInput: createdBy" />
+  </div>
 
-<div class="form-group">
-  <label class="form-label">Quote</label>
-  <textarea class="form-input" data-bind="textInput: quote" rows="5"></textarea>
-</div>
+  <div class="form-group">
+    <label class="form-label">Quote</label>
+    <textarea class="form-input" data-bind="textInput: quote" rows="5"></textarea>
+  </div>
 
-<button class="btn btn-primary" data-bind="click: submit, enable: canSubmit">Submit</button>
+  <button class="btn btn-primary" data-bind="click: submit, enable: canSubmit">Submit</button>
+</form>
