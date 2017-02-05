@@ -5,10 +5,12 @@
 
       <header class="navbar">
         <section class="navbar-section">
-          <a href="#" class="navbar-brand">Geddit.LOL</a>
+          <a class="navbar-brand">Geddit.LOL</a>
 
           <!-- ko foreach: navItems -->
-          <a href="#" class="btn btn-link" data-bind="click: function() { $parent.currentItem($data) }, text: name"></a>
+          <ge-link class="btn btn-link" params="href: url">
+            <span data-bind="text: name"></span>
+          </ge-link>
           <!-- /ko -->
         </section>
 
@@ -28,9 +30,15 @@
 </div>
 
 <style>
+  header {
+    background-color: #b2b8e5;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
   body {
     position: absolute;
-    top: 40px;
+    top: 20px;
     bottom: 20px;
     width: 100%
   }

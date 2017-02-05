@@ -1,6 +1,12 @@
 import * as ko from 'knockout'
 import * as fs from 'fs'
-import { quote } from '../../api'
+import * as quote from '../../api'
+
+type Path =
+  | '/latest'
+  | '/oldest'
+  | '/top'
+  | '/random'
 
 class QuoteListVM {
 
@@ -11,7 +17,8 @@ class QuoteListVM {
   }
 
   getQuotes = async () => {
-    const quotes = await quote.getMany(this.page, this.pageSize)
+    const path = window.location.pathname as Path
+    const quotes = await quote.getMany(this.page, this.pageSize, path)
     this.quotes.destroyAll()
     for (const quote of quotes) {
       this.quotes.push(quote)

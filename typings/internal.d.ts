@@ -1,5 +1,13 @@
 declare module 'compression' {
-    namespace api {}
+    namespace api { }
+    function api(): any;
+    export = api;
+}
+
+declare module 'body-parser' {
+    namespace api {
+        function json(): any
+    }
     function api(): any;
     export = api;
 }
@@ -56,3 +64,5 @@ declare namespace Geddit {
         updatedBy: string;
     }
 }
+
+// type Partial<T> = {[P in keyof T]?: T[P]}

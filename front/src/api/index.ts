@@ -1,5 +1,1 @@
-import * as quote from './quote'
-
-export {
-  quote
-}
+export * from './quote'
