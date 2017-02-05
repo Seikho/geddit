@@ -51,10 +51,11 @@ class AddQuoteVM {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      credentials: 'include'
     }
 
-    await fetch('/quote', options)
+    await fetch('/quote', options as any)
     this.isSubmitting(false)
     this.quote('')
   }

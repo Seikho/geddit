@@ -8,6 +8,7 @@ type Body = {
 }
 
 const handler: RequestHandler = async (req, res, next) => {
+  const isAuthed = req.signedCookies['authentication'] !== undefined
   const { quote, createdBy } = req.body as Body
   if (!isValidBody(req.body)) {
     const error = new StatusError('Invalid quote body supplied', 400)
@@ -23,7 +24,7 @@ const handler: RequestHandler = async (req, res, next) => {
     dateCreated: date,
     votes,
     quote,
-    approved: false
+    approved: isAuthed
   }
 
   await db(QUOTE)
