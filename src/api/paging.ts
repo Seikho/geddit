@@ -14,7 +14,7 @@ const handler: RequestHandler = (req: PageRequest, _, next) => {
   const { page = 1, pageSize = 10 } = req.query
 
   const parsedSize = parseInt(pageSize as any, 10)
-  if (parsedSize > 10 || parsedSize < 1) {
+  if (parsedSize > 101 || parsedSize < 1) {
     const error = new StatusError('Invalid page size', 400)
     next(error)
     return

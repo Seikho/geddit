@@ -2,6 +2,29 @@
 <h4>There doesn't appear to be anything here!</h4>
 <!-- /ko -->
 
+<!-- ko if: quotes().length > 0 -->
+<div class="container">
+  <div class="columns">
+    <div class="column col-1">Page <span data-bind="text: page"></span></div>
+    <div class="column col-7"></div>
+    <div class="column col-4">
+      <div style="float: right">
+        Page size:
+        <a class="btn btn-link" data-bind="click: function() { this.pageSize(10) }">10</a>
+        <a class="btn btn-link" data-bind="click: function() { this.pageSize(25) }">25</a>
+        <a class="btn btn-link" data-bind="click: function() { this.pageSize(50) }">50</a>
+        <a class="btn btn-link" data-bind="click: function() { this.pageSize(100) }">100</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div></div>
+<a class="btn btn-link" data-bind="click: prevPage, visible: page() > 1">previous</a>
+<a class="btn btn-link" data-bind="click: nextPage, visible: canNext">next</a>
+
 <div data-bind="foreach: quotes">
   <ge-quote params="quote: $data"></ge-quote>
 </div>
+<a class="btn btn-link" data-bind="click: prevPage, visible: page() > 1">previous</a>
+<a class="btn btn-link" data-bind="click: nextPage, visible: canNext">next</a>
+<!-- /ko -->
