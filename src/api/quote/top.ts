@@ -8,6 +8,7 @@ const handler: RequestHandler = async (req: PageRequest, res) => {
 
   const quote: Schema.Quote = await db(QUOTE)
     .select()
+    .where('approved', true)
     .orderBy('votes', 'desc')
     .offset(offset)
     .limit(pageSize)

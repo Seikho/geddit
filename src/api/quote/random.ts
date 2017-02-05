@@ -4,6 +4,7 @@ import { RequestHandler } from 'express'
 const handler: RequestHandler = async (_, res) => {
   const quote: Schema.Quote = await db(QUOTE)
     .select()
+    .where('approved', true)
     .orderByRaw('RANDOM()')
     .limit(10)
 

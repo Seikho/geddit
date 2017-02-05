@@ -3,12 +3,13 @@ import * as tables from '../../store'
 
 export async function up(db: Knex) {
   await db.schema.createTable(tables.QUOTE, table => {
-    table.string('id').primary().index()
+    table.increments('id').primary().index()
     table.dateTime('lastUpdated').index()
     table.dateTime('dateCreated').index()
     table.bigInteger('votes')
     table.string('createdBy')
     table.string('quote')
+    table.boolean('approved').index()
   })
 
   await db.schema.createTable(tables.QUOTE_REVISION, table => {

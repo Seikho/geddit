@@ -21,7 +21,8 @@ const handler: RequestHandler = async (req, res, next) => {
     lastUpdated: date,
     dateCreated: date,
     votes,
-    quote
+    quote,
+    approved: false
   }
 
   await db(QUOTE)

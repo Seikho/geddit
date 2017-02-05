@@ -7,6 +7,7 @@ const handler: RequestHandler = async (req, res, next) => {
   const quote: Schema.Quote | undefined = await db(QUOTE)
     .select()
     .where('id', id)
+    .andWhere('approved', true)
     .first()
 
   if (!quote) {
