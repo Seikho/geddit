@@ -31,7 +31,7 @@ class QuoteVM {
       return
     }
 
-    await fetch(`/quote/${this.id}/up`)
+    await fetch(`/quote/${this.id()}/up`, { method: 'PUT' })
     this.votes(this.votes() + 1)
     store.set(this.getVoteKey(), 'up')
   }
@@ -41,7 +41,7 @@ class QuoteVM {
       return
     }
 
-    await fetch(`/quote/${this.id}/down`)
+    await fetch(`/quote/${this.id()}/down`, { method: 'PUT' })
     this.votes(this.votes() - 1)
     store.set(this.getVoteKey(), 'down')
   }

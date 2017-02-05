@@ -29,6 +29,8 @@ declare namespace Schema {
         quote: string;
 
         votes: number;
+
+        approved: boolean;
     }
 
     interface QuoteRevision {

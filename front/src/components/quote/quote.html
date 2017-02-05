@@ -2,12 +2,20 @@
   <div class="card-header">
     <strong>
     Quote #<span data-bind="text: id"></span>
-      <span data-bind="click: voteUp">+</span>
-      (<span data-bind="text: votes"></span>)
-      <span data-bind="click: voteDown">-</span>
+      <span class="quote__vote" data-bind="click: voteUp">+</span>
+    </strong> 
+    (<span data-bind="text: votes"></span>)
+    <strong>
+      <span class="quote__vote" data-bind="click: voteDown">-</span>
     </strong>
   </div>
-  <div class="card-body" style="padding-top: 0px">
-    <pre data-bind="text: quoteText"></pre>
+  <div class="card-body" style="padding-top: 3px">
+    <pre data-bind="text: quoteText" style="padding-top: 0px; margin-top: 0px"></pre>
   </div>
 </div>
+
+<style>
+  .quote__vote {
+    cursor: pointer
+  }
+</style>
