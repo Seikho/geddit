@@ -36,7 +36,9 @@ const frontEndRoutes = [
   '/random',
   '/top',
   '/add-quote',
-  '/login'
+  '/login',
+  '/logout',
+  '/unapproved'
 ]
 
 for (const route of frontEndRoutes) {
