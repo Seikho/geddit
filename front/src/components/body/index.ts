@@ -14,7 +14,8 @@ class BodyVM {
     { name: 'oldest', component: 'ge-quote-list', paths: ['/oldest'], url: '/oldest' },
     { name: 'random', component: 'ge-quote-list', paths: ['/random'], url: '/random' },
     { name: 'top', component: 'ge-quote-list', paths: ['/top'], url: '/top' },
-    { name: 'add quote', component: 'ge-add-quote', paths: ['/add-quote'], url: '/add-quote' }
+    { name: 'add quote', component: 'ge-add-quote', paths: ['/add-quote'], url: '/add-quote' },
+    { name: 'login', component: 'ge-login', paths: ['/login'], url: '/login' }
   ])
 
   notFoundItem = { name: 'Not Found', component: 'ge-not-found', paths: [], url: '/not-found' }
