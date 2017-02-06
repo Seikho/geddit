@@ -5,7 +5,7 @@ import { StatusError } from '../error'
 import db, { USER } from '../../store'
 
 const handler: RequestHandler = async (req, res, next) => {
-  const authUser = req.signedCookies['authentication']
+  const authUser: Cookie = req.signedCookies['authentication']
   if (!authUser) {
     const error = new StatusError('Not logged in', 401)
     return next(error)

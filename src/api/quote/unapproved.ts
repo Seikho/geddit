@@ -7,8 +7,15 @@ const handler: RequestHandler = async (req: PageRequest, res, next) => {
   const { page, pageSize } = req.paging
   const offset = (page * pageSize) - pageSize
 
-  const user = req.signedCookies['authentication']
+  const user: Cookie = req.signedCookies['authentication']
   if (!user) {
+    const error = new StatusError('Unauthorized', 401)
+    return next(error)
+  }
+
+  const accessLevel = user.accessLevel || AccessLevel.Contributor
+
+  if (accessLevel === AccessLevel.Contributor) {
     const error = new StatusError('Unauthorized', 401)
     return next(error)
   }

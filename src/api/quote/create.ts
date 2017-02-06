@@ -4,12 +4,16 @@ import db, { QUOTE } from '../../store'
 
 type Body = {
   quote: string
-  createdBy: string
 }
 
 const handler: RequestHandler = async (req, res, next) => {
-  const isAuthed = req.signedCookies['authentication'] !== undefined
-  const { quote, createdBy } = req.body as Body
+  const authUser: Cookie = req.signedCookies['authentication']
+  if (!authUser) {
+    const error = new StatusError('Unauthorized', 401)
+    return next(error)
+  }
+
+  const { quote } = req.body as Body
   if (!isValidBody(req.body)) {
     const error = new StatusError('Invalid quote body supplied', 400)
     return next(error)
@@ -19,12 +23,12 @@ const handler: RequestHandler = async (req, res, next) => {
   const votes = 0
 
   const record: Partial<Schema.Quote> = {
-    createdBy,
+    createdBy: authUser.displayName,
     lastUpdated: date,
     dateCreated: date,
     votes,
     quote,
-    approved: isAuthed
+    approved: authUser.accessLevel > AccessLevel.Contributor
   }
 
   await db(QUOTE)
@@ -43,16 +47,6 @@ function isValidBody(body: Body): boolean {
     if (!Array.isArray(result)) {
       return false
     }
-
-    if (typeof body.createdBy !== 'string') {
-      return false
-    }
-
-    const isAllStrings = result.every(r => typeof r === 'string')
-    if (!isAllStrings) {
-      return false
-    }
-
     return true
   } catch (ex) {
     return false

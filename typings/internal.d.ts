@@ -1,3 +1,17 @@
+declare type Cookie = {
+    id: number
+    username: string
+    displayName: string
+    accessLevel: AccessLevel
+}
+
+declare const enum AccessLevel {
+    Disabled = -1,
+    Contributor = 0,
+    Moderator = 1,
+    Administrator = 2
+}
+
 declare module 'cookie-session' {
     import * as express from 'express'
     function cookieSession(options?: CookieSessionInterfaces.CookieSessionOptions): express.RequestHandler;
@@ -57,9 +71,13 @@ declare namespace Schema {
     interface User {
         id: number
 
+        displayName: string
+
         username: string
 
         hashedPassword: string
+
+        accessLevel: AccessLevel
     }
 }
 

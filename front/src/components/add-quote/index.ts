@@ -2,19 +2,16 @@ import * as ko from 'knockout'
 import * as fs from 'fs'
 
 class AddQuoteVM {
-  createdBy = ko.observable('')
   quote = ko.observable('')
   isSubmitting = ko.observable(false)
 
   isValidQuote = ko.computed(() => {
     const rawQuote = this.quote()
-    if (this.createdBy().length < 3) {
-      return false
-    }
 
     if (rawQuote.length < 10) {
       return false
     }
+
     try {
       const quote = rawQuote.split('\n')
       if (!Array.isArray(quote)) {
@@ -45,7 +42,6 @@ class AddQuoteVM {
     this.isSubmitting(true)
 
     const body = {
-      createdBy: this.createdBy(),
       quote: JSON.stringify(this.quote().split('\n'))
     }
 

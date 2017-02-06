@@ -2,14 +2,28 @@ import * as ko from 'knockout'
 import * as fs from 'fs'
 
 interface NavItem {
-  name: string
+  name: string | KnockoutObservable<string>
   component: string
   paths: string[]
   url: string
-  display: boolean
+  display: boolean | KnockoutObservable<boolean>
 }
 
 class BodyVM {
+  cookie = ko.observable<{ id?: number, username?: string, accessLevel?: AccessLevel, displayName?: string }>({})
+
+  isAuthenticated = ko.computed(() => {
+    return this.cookie().username !== undefined
+  })
+
+  isAdmin = ko.computed(() => {
+    return this.cookie().accessLevel === AccessLevel.Administrator
+  })
+
+  canModerate = ko.computed(() => {
+    return this.cookie().accessLevel > AccessLevel.Contributor
+  })
+
   navItems: KnockoutObservableArray<NavItem> = ko.observableArray([
     {
       name: 'latest',
@@ -45,7 +59,7 @@ class BodyVM {
       component: 'ge-add-quote',
       paths: ['/add-quote'],
       url: '/add-quote',
-      display: true
+      display: this.isAuthenticated
     },
     {
       name: 'login',
@@ -69,17 +83,23 @@ class BodyVM {
       display: false
     },
     {
-      name: 'my account',
+      name: ko.computed(() => this.cookie().displayName || 'my account'),
       component: 'ge-account',
       paths: ['/my-account'],
-      url: 'my-account',
+      url: '/my-account',
+      display: false
+    },
+    {
+      name: 'register',
+      component: 'ge-register',
+      paths: ['/register'],
+      url: '/register',
       display: false
     }
   ])
 
   notFoundItem = { name: 'Not Found', component: 'ge-not-found', paths: [], url: '/not-found', display: false }
   currentItem = ko.observable<NavItem>(this.navItems()[0])
-  isAuthenticated = ko.observable(false)
 
   constructor() {
     window.addEventListener('push-state', () => {
@@ -91,18 +111,34 @@ class BodyVM {
     })
 
     window.addEventListener('authenticated', () => {
-      this.isAuthenticated(true)
+      this.setCookie()
     })
 
     window.addEventListener('unauthenticated', () => {
-      this.isAuthenticated(false)
+      this.setCookie()
     })
 
     this.navigate()
+    this.setCookie()
+  }
 
-    const cookies = document.cookie.split('; ')
-    const hasAuthCookie = cookies.some(cookie => cookie.split('=')[0] === 'authentication')
-    this.isAuthenticated(hasAuthCookie)
+  setCookie = () => {
+    // Don't ask
+    const cookie = document.cookie
+      .split('; ')
+      .map(cookie => decodeURIComponent(cookie))
+      .filter(cookie => cookie.indexOf('authentication=s:j:') > -1)
+      .map(cookie => cookie.split('authentication=s:j:')[1])
+      .map(cookie => cookie.split('.')[0])
+      .map(cookie => {
+        try {
+          return JSON.parse(cookie)
+        } catch (ex) {
+          return {}
+        }
+      })[0]
+
+    this.cookie(cookie || {})
   }
 
   navigate = () => {
