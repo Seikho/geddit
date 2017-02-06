@@ -8,7 +8,11 @@ class AddQuoteVM {
 
   isValidQuote = ko.computed(() => {
     const rawQuote = this.quote()
-    if (rawQuote.length < 15) {
+    if (this.createdBy().length < 3) {
+      return false
+    }
+
+    if (rawQuote.length < 10) {
       return false
     }
     try {
