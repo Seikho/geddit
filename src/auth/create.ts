@@ -8,6 +8,7 @@ import db, { USER } from '../store'
 
 const username = (process.argv[2] || '').toLowerCase()
 const password = process.argv[3]
+const displayName = process.argv.slice(4).join(' ') || username
 
 async function createUser() {
   if (!username) {
@@ -33,7 +34,7 @@ async function createUser() {
   const hashedPassword = await hash(password)
 
   await db(USER)
-  .insert({ username, hashedPassword })
+    .insert({ username, displayName, hashedPassword, accessLevel: AccessLevel.Moderator })
 
   console.log(`User '${username}' successfully created`) // tslint:disable-line
   process.exit(0)
