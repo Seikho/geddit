@@ -13,6 +13,7 @@ class QuoteListVM {
   pageSize = ko.observable(10)
   quotes = ko.observableArray<Schema.Quote>([])
   canNext = ko.observable(false)
+  isLoading = ko.observable(true)
 
   constructor(page: number = 1, pageSize: number = 10) {
     this.page(page)
@@ -42,6 +43,7 @@ class QuoteListVM {
   }
 
   getQuotes = async () => {
+    this.isLoading(true)
     const path = window.location.pathname as Path
     const quotes = await quote.getMany(this.page(), this.pageSize() + 1, path)
     this.canNext(quotes.length > this.pageSize())
@@ -49,6 +51,7 @@ class QuoteListVM {
     for (const quote of quotes) {
       this.quotes.push(quote)
     }
+    this.isLoading(false)
   }
 
   nextPage = () => {
