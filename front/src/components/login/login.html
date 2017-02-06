@@ -1,3 +1,8 @@
+<!-- ko if: $parent.isAuthenticated -->
+<h3>You are already logged in!</h3>
+<!-- /ko -->
+
+<!-- ko ifnot: $parent.isAuthenticated -->
 <h3>Login</h3>
 <form data-bind="submit: submit">
   <div class="form-group">
@@ -14,3 +19,6 @@
   <div data-bind="text: error">
   </div>
 </form>
+
+<ge-register></ge-register>
+<!-- /ko -->

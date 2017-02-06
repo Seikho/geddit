@@ -4,6 +4,7 @@ import create from './create'
 import logout from './logout'
 import whoAmI from './who-am-i'
 import changePassword from './change-password'
+import register from './register'
 
 const router = Router()
 
@@ -12,5 +13,6 @@ router.get('/logout', logout)
 router.post('/login', login)
 router.post('/', create)
 router.post('/change-password', changePassword)
+router.post('/register', register)
 
 export default router

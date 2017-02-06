@@ -4,6 +4,17 @@ import { StatusError } from '../error'
 import db, { USER } from '../../store'
 
 const handler: RequestHandler = async (req, res, next) => {
+  const authUser = req.signedCookies['authentication']
+  if (authUser) {
+    const error = new StatusError('Not logged in', 401)
+    return next(error)
+  }
+
+  if (authUser) {
+    const error = new StatusError('Already logged in', 400)
+    return next(error)
+  }
+
   const { username, password } = req.body
 
   const authError = new StatusError('Invalid login attempt. Incorrect username or password', 401)
@@ -13,6 +24,10 @@ const handler: RequestHandler = async (req, res, next) => {
     .where('username', username.toLowerCase())
     .first()
 
+  if (user.accessLevel === AccessLevel.Disabled) {
+    return next(authError)
+  }
+
   if (!user) {
     return next(authError)
   }
@@ -21,8 +36,13 @@ const handler: RequestHandler = async (req, res, next) => {
   if (!isCorrectPassword) {
     return next(authError)
   }
-
-  res.cookie('authentication', { username, id: user.id }, { signed: true })
+  const cookie = {
+    username,
+    displayName: user.displayName,
+    id: user.id,
+    accessLevel: user.accessLevel
+  }
+  res.cookie('authentication', cookie, { signed: true })
 
   res
     .status(200)

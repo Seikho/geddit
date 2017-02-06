@@ -1,0 +1,26 @@
+<h3>Sign up to contribute!</h3>
+<br/>
+<form data-bind="submit: submit">
+  <div class="form-group">
+    <label class="form-label">Username</label>
+    <input class="form-input" data-bind="textInput: username" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Display Name</label>
+    <input class="form-input" data-bind="textInput: displayName" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">New Password</label>
+    <input class="form-input" type="password" data-bind="textInput: password" />
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">Confirm Password</label>
+    <input class="form-input" type="password" data-bind="textInput: confirmPassword" /> </div>
+
+  <button class="btn btn-primary" type="submit" data-bind="enable: isPasswordValid, click: submit">Register</button>
+  <div data-bind="text: message">
+  </div>
+</form>

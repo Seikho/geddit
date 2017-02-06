@@ -3,36 +3,40 @@ import * as fs from 'fs'
 
 class AccountVM {
   username = ko.observable('')
-  oldPassword = ko.observable('')
+  displayName = ko.observable('')
   password = ko.observable('')
   confirmPassword = ko.observable('')
   message = ko.observable('')
 
   isPasswordValid = ko.computed(() => {
-    return this.password().length > 5 && this.password() === this.confirmPassword()
+    return this.password().length > 0 && this.password() === this.confirmPassword()
   })
 
-  constructor() {
-    this.whoAmI()
-  }
-
-  whoAmI = async () => {
-    const result = await fetch('/user/who-am-i', { credentials: 'include' })
-    if (result.status === 200) {
-      const json = await result.json()
-      this.username(json.username)
+  isFormValid = ko.computed(() => {
+    if (!this.isPasswordValid()) {
+      return false
     }
-  }
+
+    const validUsername = this.username().length > 3
+    const validDisplayName = this.displayName().length > 3
+    const validPassword = this.password().length > 5
+    return validUsername && validDisplayName && validPassword
+  })
 
   submit = async () => {
     if (!this.isPasswordValid()) {
       return
     }
 
+    if (!this.isFormValid()) {
+      return
+    }
+
     this.message('Submitting...')
 
     const body = {
-      oldPassword: this.oldPassword(),
+      username: this.username(),
+      displayName: this.displayName(),
       password: this.password(),
       confirmPassword: this.confirmPassword()
     }
@@ -47,9 +51,10 @@ class AccountVM {
       credentials: 'include'
     }
 
-    const result = await fetch('/user/change-password', options as any)
+    const result = await fetch('/user/register', options as any)
     if (result.status === 200) {
-      this.message('Password successfully updated')
+      this.message('Successfully registered!')
+      window.dispatchEvent(new Event('authenticated'))
       return
     }
 
@@ -57,8 +62,8 @@ class AccountVM {
   }
 }
 
-ko.components.register('ge-account', {
-  template: fs.readFileSync(`${__dirname}/account.html`).toString(),
+ko.components.register('ge-register', {
+  template: fs.readFileSync(`${__dirname}/register.html`).toString(),
   viewModel: {
     createViewModel: () => new AccountVM()
   }

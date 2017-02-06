@@ -17,13 +17,17 @@
         </section>
 
         <section class="navbar-section">
-          <span data-bind="visible: isAuthenticated">
+          <span data-bind="visible: canModerate">
             <ge-link class="btn btn-link" params="href: '/unapproved'">unapproved</ge-link>
+            <ge-link class="btn btn-link" params="href: '/my-account'">
+                <span data-bind="text: cookie().displayName"></span>
+            </ge-link>
+          </span>
+          <span data-bind="visible: isAuthenticated">
             <ge-link class="btn btn-link" params="href: '/logout'">logout</ge-link>
-            <ge-link class="btn btn-link" params="href: '/my-account'">my account</ge-link>
           </span>
           <span data-bind="ifnot: isAuthenticated">
-            <ge-link class="btn btn-link" params="href: '/login'">login</ge-link>
+            <ge-link class="btn btn-link" params="href: '/login'">login/register</ge-link>
           </span>
           <div class="input-group input-inline">
             <input class="form-input" type="text" placeholder="search" />

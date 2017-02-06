@@ -37,7 +37,7 @@ class LoginVM {
     const result = await fetch('/user/login', options)
     this.isSubmitting(false)
     if (result.status === 200) {
-      window.history.pushState({}, 'Geddit.LOL', '/unapproved')
+      window.history.pushState({}, 'Geddit.LOL', '/latest')
       window.dispatchEvent(new Event('push-state'))
       window.dispatchEvent(new Event('authenticated'))
       return
