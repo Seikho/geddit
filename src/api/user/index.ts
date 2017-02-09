@@ -10,7 +10,7 @@ import paging from '../paging'
 
 const router = Router()
 
-router.get('/get-all', paging, getAll)
+router.get('/', paging, getAll)
 router.get('/who-am-i', whoAmI)
 router.get('/logout', logout)
 router.post('/login', login)

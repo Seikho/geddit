@@ -1,0 +1,1 @@
+export { default as getMany } from './get-many'
