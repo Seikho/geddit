@@ -1,13 +1,13 @@
 import { RequestHandler } from 'express'
 import { StatusError } from '../error'
 import db, { QUOTE } from '../../store'
-
+import currentUser from '../current-user'
 type Body = {
   quote: string
 }
 
 const handler: RequestHandler = async (req, res, next) => {
-  const authUser: Cookie = req.signedCookies['authentication']
+  const authUser = currentUser(req)
   if (!authUser) {
     const error = new StatusError('Unauthorized', 401)
     return next(error)

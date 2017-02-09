@@ -2,12 +2,12 @@ import db, { QUOTE } from '../../store'
 import { RequestHandler } from 'express'
 import { PageRequest } from '../paging'
 import { StatusError } from '../error'
+import currentUser from '../current-user'
 
 const handler: RequestHandler = async (req: PageRequest, res, next) => {
-  const { page, pageSize } = req.paging
-  const offset = (page * pageSize) - pageSize
+  const { offset, pageSize } = req.paging
 
-  const user: Cookie = req.signedCookies['authentication']
+  const user = currentUser(req)
   if (!user) {
     const error = new StatusError('Unauthorized', 401)
     return next(error)

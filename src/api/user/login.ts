@@ -2,9 +2,10 @@ import compare from '../../auth/compare'
 import { RequestHandler } from 'express'
 import { StatusError } from '../error'
 import db, { USER } from '../../store'
+import currentUser from '../current-user'
 
 const handler: RequestHandler = async (req, res, next) => {
-  const authUser = req.signedCookies['authentication']
+  const authUser = currentUser(req)
   if (authUser) {
     const error = new StatusError('Not logged in', 401)
     return next(error)
