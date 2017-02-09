@@ -26,7 +26,7 @@
 <a class="btn btn-link" data-bind="click: prevPage, visible: page() > 1">previous</a>
 <a class="btn btn-link" data-bind="click: nextPage, visible: canNext">next</a>
 
-<div data-bind="foreach: quotes">
+<div data-bind="foreach: content">
   <ge-quote params="quote: $data"></ge-quote>
 </div>
 <a class="btn btn-link" data-bind="click: prevPage, visible: page() > 1">previous</a>
