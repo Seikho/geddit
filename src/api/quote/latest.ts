@@ -4,8 +4,7 @@ import { PageRequest } from '../paging'
 import toDto from './to-dto'
 
 const handler: RequestHandler = async (req: PageRequest, res) => {
-  const { page, pageSize } = req.paging
-  const offset = (page * pageSize) - pageSize
+  const { offset, pageSize } = req.paging
 
   const quote: Schema.Quote[] = await db(QUOTE)
     .select()
