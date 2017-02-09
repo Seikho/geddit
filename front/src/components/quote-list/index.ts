@@ -1,6 +1,6 @@
 import * as ko from 'knockout'
 import * as fs from 'fs'
-import * as quote from '../../api'
+import { quote } from '../../api'
 import PagerVM from '../pager'
 
 type Path =
@@ -14,11 +14,7 @@ class QuoteListVM extends PagerVM<Schema.Quote> {
     super({
       page,
       pageSize,
-      fetcher: async (page: number, pageSize: number) => {
-        const path = window.location.pathname as Path
-        const quotes = await quote.getMany(page, pageSize, path)
-        return quotes
-      }
+      fetcher: (page, pageSize) => quote.getMany(page, pageSize, window.location.pathname as Path)
     })
   }
 }
