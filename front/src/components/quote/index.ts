@@ -2,7 +2,12 @@ import * as ko from 'knockout'
 import * as fs from 'fs'
 import * as store from '../../store'
 
+interface Params {
+  quote?: Schema.Quote & Object
+}
+
 class QuoteVM {
+  isLoading = ko.observable(false)
   id = ko.observable(0)
   createdBy = ko.observable('')
   dateCreated = ko.observable(new Date())
@@ -39,16 +44,13 @@ class QuoteVM {
     return this.votes() > 0 ? `+${this.votes()}` : `${this.votes()}`
   })
 
-  constructor(params: { quote: Schema.Quote & Object }) {
+  constructor(params: Params = {}) {
     const quote = params.quote
-    this.id(quote.id)
-    this.createdBy(quote.createdBy)
-    this.dateCreated(new Date(quote.dateCreated))
-    this.lastUpdated(new Date(quote.lastUpdated))
-    this.quote(JSON.parse(quote.quote))
-    this.votes(quote.votes)
-    this.isApprovable(quote.hasOwnProperty('approved'))
-    this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
+    if (!quote) {
+      this.fetchQuote()
+      return
+    }
+    this.loadQuote(quote)
   }
 
   voteUp = async () => {
@@ -109,6 +111,47 @@ class QuoteVM {
 
   getVoteKey(): string {
     return `voteState_${this.id()}`
+  }
+
+  loadQuote = (quote: Schema.Quote) => {
+    this.isLoading(false)
+    this.id(quote.id)
+    this.createdBy(quote.createdBy)
+    this.dateCreated(new Date(quote.dateCreated))
+    this.lastUpdated(new Date(quote.lastUpdated))
+    this.quote(JSON.parse(quote.quote))
+    this.votes(quote.votes)
+    this.isApprovable(quote.hasOwnProperty('approved'))
+    this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
+  }
+
+  fetchQuote = async () => {
+    this.isLoading(true)
+    const quoteId = window.location.pathname.replace('/quote/', '')
+    if (!quoteId) {
+      return
+    }
+
+    const isNumber = !isNaN(parseInt(quoteId, 10))
+    if (!isNumber) {
+      return
+    }
+
+    const res = await fetch(window.location.pathname, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      },
+      credentials: 'include'
+    })
+
+    if (res.status === 404) {
+      this.isLoading(false)
+      return
+    }
+
+    const quote = await res.json()
+    this.loadQuote(quote)
   }
 }
 

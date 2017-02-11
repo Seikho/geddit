@@ -4,7 +4,7 @@ import * as fs from 'fs'
 interface NavItem {
   name: string | KnockoutObservable<string>
   component: string
-  paths: string[]
+  paths: Array<string | RegExp>
   url: string
   display: boolean | KnockoutObservable<boolean>
 }
@@ -67,6 +67,13 @@ class BodyVM {
       paths: ['/add-quote'],
       url: '/add-quote',
       display: this.isAuthenticated
+    },
+    {
+      name: 'single quote',
+      component: 'ge-quote',
+      paths: [/\/quote\/[0-9]+/],
+      url: '/quote',
+      display: false
     }
   ])
 
@@ -160,7 +167,16 @@ class BodyVM {
     const path = window.location.pathname
     const navItem = this
       .allNavItems()
-      .find(item => item.paths.some(p => p === path))
+      .find(item => item.paths.some(p => {
+        if (typeof p === 'string') {
+          return p === path
+        }
+
+        return path
+          .split(p)
+          .filter(match => !!match)
+          .length === 0
+      }))
     if (navItem) {
       this.currentItem(navItem)
       return
