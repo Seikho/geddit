@@ -24,6 +24,21 @@ class QuoteVM {
       .join('\n')
   })
 
+  voteColor = ko.computed(() => {
+    if (this.votes() === 0) {
+      return 'black'
+    }
+    return this.votes() > 0 ? 'green' : 'red'
+  })
+
+  voteText = ko.computed(() => {
+    if (this.votes() === 0) {
+      return '0'
+    }
+
+    return this.votes() > 0 ? `+${this.votes()}` : `${this.votes()}`
+  })
+
   constructor(params: { quote: Schema.Quote & Object }) {
     const quote = params.quote
     this.id(quote.id)
