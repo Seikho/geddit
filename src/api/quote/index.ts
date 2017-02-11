@@ -4,6 +4,7 @@ import getLatest from './latest'
 import getOldest from './oldest'
 import getRandom from './random'
 import getTop from './top'
+import getMine from './mine'
 import vote from './vote'
 import paging from '../paging'
 import create from './create'
@@ -17,6 +18,7 @@ router.get('/top', paging, getTop)
 router.get('/oldest', paging, getOldest)
 router.get('/latest', paging, getLatest)
 router.get('/unapproved', paging, getUnapproved)
+router.get('/mine', paging, getMine)
 
 // Approving
 router.put('/:id/:status', approve)

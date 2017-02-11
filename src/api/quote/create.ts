@@ -2,6 +2,7 @@ import { RequestHandler } from 'express'
 import { StatusError } from '../error'
 import db, { QUOTE } from '../../store'
 import currentUser from '../current-user'
+
 type Body = {
   quote: string
 }
