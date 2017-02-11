@@ -20,7 +20,8 @@ export async function up(db: Knex) {
     .update({
       displayName: user.username,
       accessLevel: AccessLevel.Administrator
-    }))
+    })
+    .where('id', user.id))
 
   await Promise.all(queries)
 }
