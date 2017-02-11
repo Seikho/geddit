@@ -54,6 +54,8 @@ class AccountVM {
     const result = await fetch('/user/register', options as any)
     if (result.status === 200) {
       this.message('Successfully registered!')
+      window.history.pushState({}, 'Geddit.LOL', '/latest')
+      window.dispatchEvent(new Event('push-state'))
       window.dispatchEvent(new Event('authenticated'))
       return
     }
