@@ -55,6 +55,13 @@ class BodyVM {
       display: true
     },
     {
+      name: 'my quotes',
+      component: 'ge-quote-list',
+      paths: ['/mine'],
+      url: '/mine',
+      display: true
+    },
+    {
       name: 'add quote',
       component: 'ge-add-quote',
       paths: ['/add-quote'],

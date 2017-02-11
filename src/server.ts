@@ -39,7 +39,8 @@ const frontEndRoutes = [
   '/login',
   '/logout',
   '/unapproved',
-  '/my-account'
+  '/my-account',
+  '/mine'
 ]
 
 for (const route of frontEndRoutes) {

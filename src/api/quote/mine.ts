@@ -1,7 +1,6 @@
 import db, { QUOTE } from '../../store'
 import { RequestHandler } from 'express'
 import { PageRequest } from '../paging'
-import toDto from './to-dto'
 import currentUser from '../current-user'
 import { StatusError } from '../error'
 
@@ -14,7 +13,7 @@ const handler: RequestHandler = async (req: PageRequest, res, next) => {
 
   const { offset, pageSize } = req.paging
 
-  const quote: Schema.Quote[] = await db(QUOTE)
+  const quotes: Schema.Quote[] = await db(QUOTE)
     .select()
     .where('approved', true)
     .andWhere('userId', authUser.id)
@@ -22,7 +21,7 @@ const handler: RequestHandler = async (req: PageRequest, res, next) => {
     .offset(offset)
     .limit(pageSize)
 
-  res.json(quote.map(q => toDto(q, req.signedCookies)))
+  res.json(quotes)
 }
 
 export default handler
