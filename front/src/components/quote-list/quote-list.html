@@ -1,12 +1,12 @@
-<!-- ko if: quotes().length === 0 && isLoading() === true -->
+<!-- ko if: content().length === 0 && isLoading() === true -->
 <h5>Loading...</h5>
 <!-- /ko -->
 
-<!-- ko if: quotes().length === 0 && isLoading() === false -->
+<!-- ko if: content().length === 0 && isLoading() === false -->
 <h4>There doesn't appear to be anything here!</h4>
 <!-- /ko -->
 
-<!-- ko if: quotes().length > 0 -->
+<!-- ko if: content().length > 0 -->
 <div class="container">
   <div class="columns">
     <div class="column col-1">Page <span data-bind="text: page"></span></div>

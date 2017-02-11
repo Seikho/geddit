@@ -5,15 +5,20 @@
 
       <header class="navbar">
         <section class="navbar-section">
-          <a class="navbar-brand">Geddit? LOL</a>
-
-          <!-- ko foreach: navItems -->
-          <span data-bind="visible: display">
-            <ge-link class="btn btn-link" params="href: url">
-              <span data-bind="text: name"></span>
-          </ge-link>
+          <span style="margin-right: 5px">
+            <h5>
+              <strong>Geddit? LOL</strong>
+            </h5>
           </span>
-          <!-- /ko -->
+
+          <ul class="tab" data-bind="foreach: navItems">
+            <li class="tab-item" data-bind="visible: display, css: { active: $parent.currentItem().name === name }">
+              <ge-link class="btn btn-link" params="href: url">
+                <span data-bind="text: name"></span>
+              </ge-link>
+            </li>
+          </ul>
+
         </section>
 
         <section class="navbar-section">
@@ -21,7 +26,7 @@
             <ge-link class="btn btn-link" params="href: '/unapproved'">unapproved</ge-link>
             <ge-link class="btn btn-link" params="href: '/my-account'">
                 <span data-bind="text: cookie().displayName"></span>
-            </ge-link>
+          </ge-link>
           </span>
           <span data-bind="visible: isAuthenticated">
             <ge-link class="btn btn-link" params="href: '/logout'">logout</ge-link>
@@ -45,7 +50,7 @@
 
 <style>
   header {
-    background-color: #b2b8e5;
+    border-bottom: 2px solid #b2b8e5;
     padding-left: 10px;
     padding-right: 10px;
   }
