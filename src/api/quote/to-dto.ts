@@ -1,8 +1,10 @@
-export default function map(quote: Schema.Quote, signedCookies: any) {
+export default function map(quote: Schema.Quote, signedCookies: { authentication: Cookie }) {
   const newQuote = { ...quote }
-  if (signedCookies.authentication) {
-    return quote
+  const auth = signedCookies.authentication
+  if (!auth || auth.accessLevel < AccessLevel.Moderator) {
+    delete newQuote.approved
+    return newQuote
   }
-  delete newQuote.approved
-  return newQuote
+
+  return quote
 }
