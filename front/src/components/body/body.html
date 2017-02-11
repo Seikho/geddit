@@ -4,6 +4,7 @@
     <div class="column col-10">
 
       <header class="navbar">
+
         <section class="navbar-section">
           <span style="margin-right: 5px">
             <h5>
@@ -11,30 +12,25 @@
             </h5>
           </span>
 
-          <ul class="tab" data-bind="foreach: navItems">
+          <ul class="tab" data-bind="foreach: leftNavItems">
             <li class="tab-item" data-bind="visible: display, css: { active: $parent.currentItem().name === name }">
               <ge-link class="btn btn-link" params="href: url">
                 <span data-bind="text: name"></span>
               </ge-link>
             </li>
           </ul>
-
         </section>
 
         <section class="navbar-section">
-          <span data-bind="visible: canModerate">
-            <ge-link class="btn btn-link" params="href: '/unapproved'">unapproved</ge-link>
-            <ge-link class="btn btn-link" params="href: '/my-account'">
-                <span data-bind="text: cookie().displayName"></span>
-          </ge-link>
-          </span>
-          <span data-bind="visible: isAuthenticated">
-            <ge-link class="btn btn-link" params="href: '/logout'">logout</ge-link>
-          </span>
-          <span data-bind="ifnot: isAuthenticated">
-            <ge-link class="btn btn-link" params="href: '/login'">login/register</ge-link>
-          </span>
+          <ul class="tab" data-bind="foreach: rightNavItems">
+            <li class="tab-item" data-bind="visible: display, css: { active: $parent.currentItem().name === name }">
+              <ge-link class="btn btn-link" params="href: url">
+                <span data-bind="text: name"></span>
+              </ge-link>
+            </li>
+          </ul>
         </section>
+        
       </header>
 
       <div data-bind="component: currentItem().component">

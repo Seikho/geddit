@@ -24,7 +24,7 @@ class BodyVM {
     return this.cookie().accessLevel > AccessLevel.Contributor
   })
 
-  navItems: KnockoutObservableArray<NavItem> = ko.observableArray([
+  leftNavItems: KnockoutObservableArray<NavItem> = ko.observableArray([
     {
       name: 'latest',
       component: 'ge-quote-list',
@@ -60,34 +60,37 @@ class BodyVM {
       paths: ['/add-quote'],
       url: '/add-quote',
       display: this.isAuthenticated
-    },
+    }
+  ])
+
+  rightNavItems = ko.observableArray([
     {
       name: 'login',
       component: 'ge-login',
       paths: ['/login'],
       url: '/login',
-      display: false
+      display: ko.computed(() => !this.isAuthenticated())
     },
     {
       name: 'logout',
       component: 'ge-logout',
       paths: ['/logout'],
       url: '/logout',
-      display: false
+      display: this.isAuthenticated
     },
     {
       name: 'unapproved',
       component: 'ge-quote-list',
       paths: ['/unapproved'],
       url: '/unapproved',
-      display: false
+      display: this.canModerate
     },
     {
       name: ko.computed(() => this.cookie().displayName || 'my account'),
       component: 'ge-account',
       paths: ['/my-account'],
       url: '/my-account',
-      display: false
+      display: this.isAuthenticated
     },
     {
       name: 'register',
@@ -98,8 +101,13 @@ class BodyVM {
     }
   ])
 
+  allNavItems = ko.computed(() => [
+    ...this.leftNavItems(),
+    ...this.rightNavItems()
+  ])
+
   notFoundItem = { name: 'Not Found', component: 'ge-not-found', paths: [], url: '/not-found', display: false }
-  currentItem = ko.observable<NavItem>(this.navItems()[0])
+  currentItem = ko.observable<NavItem>(this.leftNavItems()[0])
 
   constructor() {
     window.addEventListener('push-state', () => {
@@ -144,7 +152,7 @@ class BodyVM {
   navigate = () => {
     const path = window.location.pathname
     const navItem = this
-      .navItems()
+      .allNavItems()
       .find(item => item.paths.some(p => p === path))
     if (navItem) {
       this.currentItem(navItem)
