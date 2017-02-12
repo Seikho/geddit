@@ -5,6 +5,7 @@ import PagerVM from '../pager'
 import UserVM from '../user'
 
 type AccessLabel = [AccessLevel, string]
+type Sort = { field: keyof Schema.User, ascending: boolean }
 
 class UserListVM extends PagerVM<UserVM> {
   accessLevels: Array<AccessLabel> = [
@@ -19,6 +20,9 @@ class UserListVM extends PagerVM<UserVM> {
     { title: 'Contributor', level: AccessLevel.Contributor },
     { title: 'Moderator', level: AccessLevel.Moderator }
   ])
+
+  sortField = ko.observable<keyof Schema.User>('username')
+  sortAsc = ko.observable(true)
 
   constructor() {
     super({
@@ -37,10 +41,39 @@ class UserListVM extends PagerVM<UserVM> {
       }
     })
   }
+  sortIcon = (field: keyof Schema.User) => ko.computed(() => {
+    if (this.sortField() !== field) {
+      return ''
+    }
+    return this.sortAsc() ? '▲' : '▼'
+  })
 
   getLabel = (accessLevel: AccessLevel) => {
     const label = this.accessLevels.find(level => level[0] === accessLevel) as AccessLabel
     return label[1]
+  }
+
+  sortBy = (field: keyof Schema.User) => {
+    if (field === this.sortField()) {
+      this.sortAsc(!this.sortAsc())
+    } else {
+      this.sortField(field)
+      this.sortAsc(true)
+    }
+
+    const ascending = this.sortAsc()
+
+    this.content.sort((left: any, right: any) => {
+      const leftField = ko.unwrap(left[field])
+      const rightField = ko.unwrap(right[field])
+
+      if (leftField === rightField) {
+        return 0
+      }
+
+      const result = leftField > rightField ? 1 : -1
+      return ascending ? result : result * -1
+    })
   }
 }
 

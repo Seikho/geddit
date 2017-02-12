@@ -6,9 +6,9 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>Username</th>
-      <th>Display Name</th>
-      <th>Access Level</th>
+      <th data-bind="click: function() { sortBy('username') }">Username <span data-bind="text: sortIcon('username')"></span></th>
+      <th data-bind="click: function() { sortBy('displayName') }">Display Name <span data-bind="text: sortIcon('displayName')"></span></th>
+      <th data-bind="click: function() { sortBy('accessLevel') }">Access Level <span data-bind="text: sortIcon('accessLevel')"></span></th>
       <th></th>
     </tr>
   </thead>
