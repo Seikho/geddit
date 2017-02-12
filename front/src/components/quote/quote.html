@@ -7,6 +7,13 @@
 <!-- /ko -->
 
 <!-- ko if: isLoading() === false && id() > 0 -->
+
+<meta property="og:title" content="Geddit.LOL" />
+<meta property="og:type" content="article" />
+<meta property="og:url" data-bind="attr: { content: 'http://geddit.lol/quote/' + id() }" />
+<meta property="og:image" content="http://geddit.lol/assets/1k-team.png" />
+<meta property="og:description" data-bind="attr: { content: ogDescription }" />
+
 <div class="card" style="margin: 2px" data-bind="visible: !hideQuote()">
   <div class="card-header">
     <strong>

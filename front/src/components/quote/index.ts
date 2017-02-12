@@ -18,6 +18,9 @@ class QuoteVM {
   isApprovable = ko.observable(false)
   isApproved = ko.observable(true)
   hideQuote = ko.observable(false)
+
+  ogDescription = ko.computed(() => this.quote().join(' | '))
+
   byline = ko.computed(() => {
     const by = this.createdBy()
     const submitted = new Date(this.dateCreated()).toUTCString().slice(4, 46)
