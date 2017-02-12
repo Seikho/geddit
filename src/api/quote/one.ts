@@ -22,6 +22,7 @@ const handler: RequestHandler = async (req, res, next) => {
   if (accept !== 'application/json') {
     res.write(createQuoteHtml(quote))
     res.end()
+    return
   }
 
   res.json(toDto(quote, req.signedCookies))
