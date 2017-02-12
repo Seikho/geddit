@@ -14,37 +14,39 @@ declare const enum AccessLevel {
 
 declare namespace Schema {
     interface Quote {
-        id: number;
+        id: number
 
         /** ISO Date string */
-        lastUpdated: string;
+        lastUpdated: string
 
         /** ISO Date string */
-        dateCreated: string;
+        dateCreated: string
 
         /** ISO Date string */
-        createdBy: string;
+        createdBy: string
 
         /** JSON Array of strings */
-        quote: string;
+        quote: string
 
-        votes: number;
+        votes: number
 
-        approved: boolean;
+        approved: boolean
+
+        isDeleted: boolean
     }
 
     interface QuoteRevision {
-        id: number;
-        quoteId: number;
+        id: number
+        quoteId: number
 
         /** ISO Date string */
-        revisionDate: string;
+        revisionDate: string
 
         /** ISO Date string */
-        updatedBy: string;
+        updatedBy: string
 
         /** JSON Array of strings */
-        quote: string;
+        quote: string
     }
 
     interface User {
@@ -62,19 +64,19 @@ declare namespace Schema {
 
 declare namespace Geddit {
     interface Quote {
-        id: number;
-        lastUpdated: Date;
-        dateCreated: Date;
-        quote: string[];
-        votes: number;
-        createdBy: string;
+        id: number
+        lastUpdated: Date
+        dateCreated: Date
+        quote: string[]
+        votes: number
+        createdBy: string
     }
 
     interface QuoteRevision {
-        id: number;
-        quoteId: number;
-        revisionDate: Date;
-        newQuote: string[];
-        updatedBy: string;
+        id: number
+        quoteId: number
+        revisionDate: Date
+        newQuote: string[]
+        updatedBy: string
     }
 }

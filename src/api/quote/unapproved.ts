@@ -15,18 +15,23 @@ const handler: RequestHandler = async (req: PageRequest, res, next) => {
 
   const accessLevel = user.accessLevel || AccessLevel.Contributor
 
-  if (accessLevel === AccessLevel.Contributor) {
+  if (accessLevel < AccessLevel.Moderator) {
     const error = new StatusError('Unauthorized', 401)
     return next(error)
   }
 
-  const quote: Schema.Quote = await db(QUOTE)
+  const query = db(QUOTE)
     .select()
     .where('approved', false)
     .orderBy('dateCreated', 'asc')
     .offset(offset)
     .limit(pageSize)
 
+  if (accessLevel !== AccessLevel.Administrator) {
+    query.andWhere('isDeleted', false)
+  }
+
+  const quote: Schema.Quote = await query
   res.json(quote)
 }
 

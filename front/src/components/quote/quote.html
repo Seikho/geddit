@@ -7,6 +7,7 @@
 <!-- /ko -->
 
 <!-- ko if: isLoading() === false && id() > 0 -->
+
 <div class="card" style="margin: 2px" data-bind="visible: !hideQuote()">
   <div class="card-header">
     <strong>
@@ -22,6 +23,10 @@
 
     <span data-bind="if: isApprovable">
       <span class="quote__approve label label-danger" data-bind="click: disallow">Delete</span>
+    </span>
+
+    <span data-bind="if: isDeleted">
+      <mark>Deleted</mark>
     </span>
 
   </div>

@@ -30,17 +30,23 @@ const handler: RequestHandler = async (req, res, next) => {
 
   if (!quote) {
     const error = new StatusError(`Quote '${id}' not found`, 404)
-    next(error)
-    return
+    return next(error)
+  }
+
+  if (quote.isDeleted && user.accessLevel !== AccessLevel.Administrator) {
+    const error = new StatusError(`Unauthorized: Only administrators can alter deleted quotes`, 401)
+    return next(error)
   }
 
   if (status === 'disallow') {
     await db(QUOTE)
       .update('isDeleted', true)
+      .update('approved', false)
       .where('id', id)
   } else {
     await db(QUOTE)
       .update('approved', true)
+      .update('isDeleted', false)
       .where('id', id)
   }
 

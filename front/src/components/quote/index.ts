@@ -14,9 +14,11 @@ class QuoteVM {
   lastUpdated = ko.observable(new Date())
   quote = ko.observableArray([])
   votes = ko.observable(0)
+  isDeleted = ko.observable(false)
   isApprovable = ko.observable(false)
   isApproved = ko.observable(true)
   hideQuote = ko.observable(false)
+
   byline = ko.computed(() => {
     const by = this.createdBy()
     const submitted = new Date(this.dateCreated()).toUTCString().slice(4, 46)
@@ -51,6 +53,33 @@ class QuoteVM {
       return
     }
     this.loadQuote(quote)
+  }
+
+  loadOGTags = () => {
+    // A little tightly coupled magic for OpenGraph tags on quote pages
+    for (const node of Array.from(document.querySelectorAll('meta'))) {
+      node.remove()
+    }
+
+    const correctUrl = `/quote/${this.id()}`
+    if (window.location.pathname !== correctUrl) {
+      return
+    }
+
+    const props: { [prop: string]: string } = {
+      'og:title': 'Geddit.LOL',
+      'og:type': 'article',
+      'og:url': `http://geddit.lol${correctUrl}`,
+      'og:image': 'http://geddit.lol/assets/1k-team.png',
+      'og:description': this.quote().join(' | ')
+    }
+
+    for (const property of Object.keys(props)) {
+      const element = document.createElement('meta')
+      element.setAttribute('property', property)
+      element.setAttribute('content', props[property])
+      document.head.appendChild(element)
+    }
   }
 
   voteUp = async () => {
@@ -121,8 +150,10 @@ class QuoteVM {
     this.lastUpdated(new Date(quote.lastUpdated))
     this.quote(JSON.parse(quote.quote))
     this.votes(quote.votes)
+    this.isDeleted(quote.isDeleted)
     this.isApprovable(quote.hasOwnProperty('approved'))
     this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
+    this.loadOGTags()
   }
 
   fetchQuote = async () => {
