@@ -2,14 +2,23 @@ import * as ko from 'knockout'
 import * as fs from 'fs'
 import { user } from '../../api'
 import PagerVM from '../pager'
+import UserVM from '../user'
 
-class UserListVM extends PagerVM<Schema.User> {
+type AccessLabel = [AccessLevel, string]
+
+class UserListVM extends PagerVM<UserVM> {
   accessLevels: Array<AccessLabel> = [
     [AccessLevel.Disabled, 'Disabled'],
     [AccessLevel.Contributor, 'Contributor'],
     [AccessLevel.Moderator, 'Moderator'],
     [AccessLevel.Administrator, 'Administrator']
   ]
+
+  accessOptions = ko.observableArray([
+    { title: 'Disabled', level: AccessLevel.Disabled },
+    { title: 'Contributor', level: AccessLevel.Contributor },
+    { title: 'Moderator', level: AccessLevel.Moderator }
+  ])
 
   constructor() {
     super({
@@ -22,7 +31,9 @@ class UserListVM extends PagerVM<Schema.User> {
           window.dispatchEvent(new Event('push-state'))
           return []
         }
-        return await res.json()
+        const rawUsers: Schema.User[] = await res.json()
+        const users = rawUsers.map(user => new UserVM(user))
+        return users
       }
     })
   }
@@ -41,5 +52,3 @@ ko.components.register('ge-user-list', {
 })
 
 export default UserListVM
-
-type AccessLabel = [AccessLevel, string]

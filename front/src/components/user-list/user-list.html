@@ -9,13 +9,33 @@
       <th>Username</th>
       <th>Display Name</th>
       <th>Access Level</th>
+      <th></th>
     </tr>
   </thead>
   <tbody data-bind="foreach: content">
     <tr>
-      <td><span data-bind="text: username"></span></td>
-      <td><span data-bind="text: displayName"></span></td>
-      <td><span data-bind="text: $parent.getLabel(accessLevel)"></span></td>
+      <td><span data-bind="text: username"></span></td>      
+      <td>
+        <input class="form-input" type="text" data-bind="textInput: displayName" />
+      </td>
+      <td>
+        <div class="dropdown">
+          <a class="btn dropdown-toggle" tabindex="0">
+            <span data-bind="text: $parent.getLabel(accessLevel())"></span>
+            <i class="icon-caret"></i>
+          </a>
+
+          <ul class="menu" data-bind="foreach: $parent.accessOptions" style="cursor: pointer">
+            <li class="menu-item">
+              <a data-bind="click: function() { $parent.accessLevel(level) }, text: title"></a>
+            </li>
+          </ul>
+
+        </div>
+      </td>
+      <td>
+        <button class="btn btn-primary" data-bind="enable: isModified, click: save">Update</button>
+      </td>
     </tr>
   </tbody>
 </table>

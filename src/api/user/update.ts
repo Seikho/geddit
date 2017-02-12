@@ -11,9 +11,10 @@ type Body = {
 
 const handler: RequestHandler = async (req, res, next) => {
   const authUser = currentUser(req) || {} as Cookie
-  const isAuthorized = authUser.accessLevel !== AccessLevel.Administrator
+
+  const isAuthorized = authUser.accessLevel === AccessLevel.Administrator
   if (!isAuthorized) {
-    const error = new StatusError('Unauthorized', 401)
+    const error = new StatusError('Unauthorized [Not administrator]', 401)
     return next(error)
   }
 
