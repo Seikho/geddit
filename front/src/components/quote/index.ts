@@ -76,7 +76,8 @@ class QuoteVM {
 
     for (const property of Object.keys(props)) {
       const element = document.createElement('meta')
-      element.setAttribute(property, props[property])
+      element.setAttribute('property', property)
+      element.setAttribute('content', props[property])
       document.head.appendChild(element)
     }
   }
