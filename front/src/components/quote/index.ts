@@ -14,6 +14,7 @@ class QuoteVM {
   lastUpdated = ko.observable(new Date())
   quote = ko.observableArray([])
   votes = ko.observable(0)
+  isDeleted = ko.observable(false)
   isApprovable = ko.observable(false)
   isApproved = ko.observable(true)
   hideQuote = ko.observable(false)
@@ -121,6 +122,7 @@ class QuoteVM {
     this.lastUpdated(new Date(quote.lastUpdated))
     this.quote(JSON.parse(quote.quote))
     this.votes(quote.votes)
+    this.isDeleted(quote.isDeleted)
     this.isApprovable(quote.hasOwnProperty('approved'))
     this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
   }
