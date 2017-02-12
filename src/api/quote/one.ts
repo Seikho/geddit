@@ -43,6 +43,8 @@ function createQuoteHtml(quote: Schema.Quote) {
   <meta property="og:type" content="article" />
   <meta property="og:url" content="http://www.geddit.lol/quote/${quote.id}" />
   <meta property="og:image" content="http://www.geddit.lol/assets/1k-team-small.png" />
+  <meta property="og:image:width" content="64" />
+  <meta property="og:image:height" content="64" />
   <meta property="og:description" content="${lines.join(' | ')}" />
 </head>
 
