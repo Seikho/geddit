@@ -24,6 +24,10 @@
       <span class="quote__approve label label-danger" data-bind="click: disallow">Delete</span>
     </span>
 
+    <span data-bind="if: isDeleted">
+      <mark>Deleted</mark>
+    </span>
+
   </div>
   <div class="card-body" style="padding-top: 3px">
     <pre data-bind="text: quoteText" style="padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px"></pre>
