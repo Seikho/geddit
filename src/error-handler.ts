@@ -27,8 +27,7 @@ const handler: ErrorRequestHandler = (error: Error | StatusError | any, _, res) 
       .status(500)
       .sendFile(path.resolve(staticPath, 'index.html'))
 
-    logger.error(error.message)
-    logger.error(error.stack)
+    logger.warn(error.message)
     return
   }
 

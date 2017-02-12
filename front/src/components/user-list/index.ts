@@ -15,7 +15,15 @@ class UserListVM extends PagerVM<Schema.User> {
     super({
       page: 1,
       pageSize: 10,
-      fetcher: (page, pageSize) => user.getMany(page, pageSize)
+      fetcher: async (page, pageSize) => {
+        const res = await user.getMany(page, pageSize)
+        if (res.status !== 200) {
+          window.history.pushState({}, 'Geddit.LOL', '/latest')
+          window.dispatchEvent(new Event('push-state'))
+          return []
+        }
+        return await res.json()
+      }
     })
   }
 

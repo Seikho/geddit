@@ -1,5 +1,5 @@
 <!-- ko if: content().length === 0 && isLoading() === true -->
-<h5>Loading... <span class="loading"></span></h5>
+<h5>Loading... </h5>
 <!-- /ko -->
 
 <!-- ko if: content().length > 0 -->
@@ -15,7 +15,7 @@
     <tr>
       <td><span data-bind="text: username"></span></td>
       <td><span data-bind="text: displayName"></span></td>
-      <td><span data-bind="text: getLabel(accessLevel)"></span></td>
+      <td><span data-bind="text: $parent.getLabel(accessLevel)"></span></td>
     </tr>
   </tbody>
 </table>

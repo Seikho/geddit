@@ -86,11 +86,11 @@ class BodyVM {
       display: ko.computed(() => !this.isAuthenticated())
     },
     {
-      name: 'logout',
-      component: 'ge-logout',
-      paths: ['/logout'],
-      url: '/logout',
-      display: this.isAuthenticated
+      name: 'users',
+      component: 'ge-user-list',
+      paths: ['/users'],
+      url: '/users',
+      display: this.isAdmin
     },
     {
       name: 'unapproved',
@@ -104,6 +104,13 @@ class BodyVM {
       component: 'ge-account',
       paths: ['/my-account'],
       url: '/my-account',
+      display: this.isAuthenticated
+    },
+    {
+      name: 'logout',
+      component: 'ge-logout',
+      paths: ['/logout'],
+      url: '/logout',
       display: this.isAuthenticated
     },
     {
