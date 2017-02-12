@@ -55,33 +55,6 @@ class QuoteVM {
     this.loadQuote(quote)
   }
 
-  loadOGTags = () => {
-    // A little tightly coupled magic for OpenGraph tags on quote pages
-    for (const node of Array.from(document.querySelectorAll('meta'))) {
-      node.remove()
-    }
-
-    const correctUrl = `/quote/${this.id()}`
-    if (window.location.pathname !== correctUrl) {
-      return
-    }
-
-    const props: { [prop: string]: string } = {
-      'og:title': 'Geddit.LOL',
-      'og:type': 'article',
-      'og:url': `http://geddit.lol${correctUrl}`,
-      'og:image': 'http://geddit.lol/assets/1k-team.png',
-      'og:description': this.quote().join(' | ')
-    }
-
-    for (const property of Object.keys(props)) {
-      const element = document.createElement('meta')
-      element.setAttribute('property', property)
-      element.setAttribute('content', props[property])
-      document.head.appendChild(element)
-    }
-  }
-
   voteUp = async () => {
     if (this.getVoteState() === Voted.Up) {
       return
@@ -153,7 +126,6 @@ class QuoteVM {
     this.isDeleted(quote.isDeleted)
     this.isApprovable(quote.hasOwnProperty('approved'))
     this.isApproved(quote.hasOwnProperty('approved') && quote.approved)
-    this.loadOGTags()
   }
 
   fetchQuote = async () => {
