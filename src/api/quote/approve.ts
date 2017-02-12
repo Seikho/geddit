@@ -10,7 +10,12 @@ const handler: RequestHandler = async (req, res, next) => {
     const error = new StatusError('Unauthorized', 401)
     return next(error)
   }
-  
+
+  if (user.accessLevel < AccessLevel.Moderator) {
+    const error = new StatusError('Unauthorized', 401)
+    return next(error)
+  }
+
   const id = req.params.id
   const status = req.params.status
 
@@ -31,7 +36,7 @@ const handler: RequestHandler = async (req, res, next) => {
 
   if (status === 'disallow') {
     await db(QUOTE)
-      .delete()
+      .update('isDeleted', true)
       .where('id', id)
   } else {
     await db(QUOTE)
