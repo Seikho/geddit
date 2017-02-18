@@ -1,3 +1,9 @@
+declare module 'promise-polyfill' {
+    namespace api { }
+    const api: typeof Promise
+    export = api
+}
+
 declare type Cookie = {
     id: number
     username: string
@@ -80,3 +86,4 @@ declare namespace Geddit {
         updatedBy: string
     }
 }
+

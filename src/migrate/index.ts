@@ -17,3 +17,5 @@ export async function migrate(config: { knex?: Knex } = {}) {
 
   process.exit(0)
 }
+
+migrate()

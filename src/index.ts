@@ -1,4 +1,3 @@
-import 'whatwg-fetch'
 import server from './server'
 import logger from './logger'
 

@@ -8,7 +8,7 @@
     "build": "node node_modules/typescript/bin/tsc",
     "bundle": "browserify -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "build:bundle": "node node_modules/typescript/bin/tsc && node node_modules/browserify/bin/cmd -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
-    "migrate": "node -e \"require('./src/migrate').migrate()\"",
+    "migrate": "ts-node src/migrate/index.ts",
     "test": "mocha",
     "watch": "nodemon -e js --watch src/index.js src/index.js"
   },
@@ -47,7 +47,9 @@
     "express": "^4.14.1",
     "knex": "^0.12.6",
     "knockout": "^3.4.1",
+    "promise-polyfill": "^6.0.2",
     "sqlite3": "^3.1.8",
+    "ts-node": "^2.1.0",
     "whatwg-fetch": "^2.0.2"
   }
 }
