@@ -9,6 +9,7 @@
     "bundle": "browserify -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "build:bundle": "node node_modules/typescript/bin/tsc && node node_modules/browserify/bin/cmd -e front/src/index.js -o front/bundle.js -r fs:browserify-fs -t brfs",
     "migrate": "ts-node src/migrate/index.ts",
+    "migrate:rename": "ts-node src/migrate/fix-names",
     "test": "mocha",
     "watch": "nodemon -e js --watch src/index.js src/index.js"
   },
@@ -45,7 +46,7 @@
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-alpha.2",
     "express": "^4.14.1",
-    "knex": "^0.12.6",
+    "knex": "^0.12.7",
     "knockout": "^3.4.1",
     "promise-polyfill": "^6.0.2",
     "sqlite3": "^3.1.8",
