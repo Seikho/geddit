@@ -188,10 +188,7 @@ class BodyVM {
       // GA must be available globally
       if (typeof ga === 'function') {
         ga('set', 'page', window.location.pathname)
-        ga('send', {
-          hitType: 'pageview',
-          location: window.location.pathname
-        })
+        ga('send', 'pageview')
       }
       this.currentItem(navItem)
       return
