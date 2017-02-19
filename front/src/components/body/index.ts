@@ -59,7 +59,7 @@ class BodyVM {
       component: 'ge-quote-list',
       paths: ['/mine'],
       url: '/mine',
-      display: true
+      display: this.isAuthenticated
     },
     {
       name: 'add quote',
