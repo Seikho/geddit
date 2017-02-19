@@ -87,3 +87,4 @@ declare namespace Geddit {
     }
 }
 
+declare const ga: Function

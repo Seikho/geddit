@@ -185,6 +185,12 @@ class BodyVM {
           .length === 0
       }))
     if (navItem) {
+      if (typeof ga === 'function') {
+        ga('send', {
+          hitType: 'pageview',
+          location: window.location.pathname
+        })
+      }
       this.currentItem(navItem)
       return
     }
