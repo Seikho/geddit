@@ -30,7 +30,6 @@
     "@types/knex": "0.0.40",
     "@types/knockout": "^3.4.39",
     "@types/node": "^7.0.4",
-    "@types/whatwg-fetch": "0.0.33",
     "browserify": "^14.0.0",
     "nodemon": "^1.11.0",
     "tslint": "^4.4.2",

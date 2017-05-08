@@ -21,7 +21,8 @@ class BodyVM {
   })
 
   canModerate = ko.computed(() => {
-    return this.cookie().accessLevel > AccessLevel.Contributor
+    const accessLevel = this.cookie().accessLevel || AccessLevel.Contributor
+    return accessLevel > AccessLevel.Contributor
   })
 
   leftNavItems: KnockoutObservableArray<NavItem> = ko.observableArray([
