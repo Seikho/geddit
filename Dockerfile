@@ -1,14 +1,16 @@
-FROM node:6
+FROM mhart/alpine-node:8
 
 COPY ./ /code
 
 WORKDIR /code
 
-ENV PORT 7344 
-ENV NODE_ENV development
-ENV APP_ENV dev
+VOLUME [ "/code/data" ]
 
-RUN npm install \
-  && npm run build
+ENV PORT=7344 \
+  NODE_ENV=development \
+  APP_ENV=dev
+
+RUN yarn \
+  && yarn build
 
 ENTRYPOINT ["node", "."]
