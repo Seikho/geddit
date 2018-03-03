@@ -15,7 +15,7 @@ app.use(compression())
 // Use signed cookies
 app.set('trust proxy', 1)
 try {
-  const secret = fs.readFileSync('session.secret').toString()
+  const secret = fs.readFileSync('data/session.secret').toString()
   app.use(cookieParser(secret))
   app.use(cookieSession({
     name: 'session',
@@ -24,7 +24,7 @@ try {
     maxAge: (24 * 60 * 60 * 1000) * 365 // 365 days
   } as any))
 } catch (ex) {
-  console.log(`Please create a 'session.secret' file and restart the server`) // tslint:disable-line
+  console.log(`Please create a 'data/session.secret' file and restart the server`) // tslint:disable-line
   process.exit(-1)
 }
 

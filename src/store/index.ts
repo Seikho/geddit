@@ -4,7 +4,7 @@ const db = knex({
   client: 'sqlite3',
   useNullAsDefault: true,
   connection: {
-    filename: 'geddit.sqlite'
+    filename: 'data/geddit.sqlite'
   }
 })
 
