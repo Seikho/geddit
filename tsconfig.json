@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "module": "commonjs",
-        "target": "es5",
+        "target": "es2017",
         "noImplicitAny": true,
         "strictNullChecks": true,
         "sourceMap": true,
@@ -14,7 +14,8 @@
             "es2015.promise",
             "es2015.symbol",
             "dom"
-        ]
+        ],
+        "skipLibCheck": true
     },
     "exclude": [
         "node_modules",

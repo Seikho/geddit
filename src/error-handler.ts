@@ -6,7 +6,7 @@ import * as path from 'path'
 const isProduction = process.env.NODE_ENV === 'production'
 const staticPath = path.resolve(__dirname, '..', 'front')
 
-const handler: ErrorRequestHandler = (error: Error | StatusError | any, _, res) => {
+const handler: ErrorRequestHandler = (error, _, res) => {
   if (error instanceof StatusError) {
     res
       .status(error.status)
