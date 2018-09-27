@@ -6,11 +6,9 @@ import * as path from 'path'
 const isProduction = process.env.NODE_ENV === 'production'
 const staticPath = path.resolve(__dirname, '..', 'front')
 
-const handler: ErrorRequestHandler = (error, _, res) => {
+const handler: ErrorRequestHandler = (error, _, res, _next) => {
   if (error instanceof StatusError) {
-    res
-      .status(error.status)
-      .json({ message: error.message })
+    res.status(error.status).json({ message: error.message })
 
     logger.warn(error.message)
     logger.warn(error.stack)
@@ -23,17 +21,13 @@ const handler: ErrorRequestHandler = (error, _, res) => {
       : { message: error.message, stack: error.stack }
 
     console.log(JSON.stringify(errorObject, null, 2)) //tslint:disable-line
-    res
-      .status(500)
-      .sendFile(path.resolve(staticPath, 'index.html'))
+    res.status(500).sendFile(path.resolve(staticPath, 'index.html'))
 
     logger.warn(error.message)
     return
   }
 
-  res
-    .status(500)
-    .sendFile(path.resolve(staticPath, 'index.html'))
+  res.status(500).sendFile(path.resolve(staticPath, 'index.html'))
 
   logger.error('Unexpected error occurred:')
   logger.error(JSON.stringify(error, null, 2))
