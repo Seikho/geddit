@@ -1,16 +1,20 @@
 FROM mhart/alpine-node:8
 
-COPY ./ /code
-
-WORKDIR /code
-
 VOLUME [ "/code/data" ]
 
 ENV PORT=7344 \
   NODE_ENV=development \
   APP_ENV=dev
 
-RUN yarn \
-  && yarn build
+WORKDIR /code
+
+# Optimise cache hits for dependencies
+COPY ./package.json /code/package.json
+COPY ./yarn.lock /code/yarn.lock
+RUN yarn
+
+
+COPY ./ /code
+RUN yarn build
 
 ENTRYPOINT ["node", "."]
