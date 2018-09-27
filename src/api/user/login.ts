@@ -16,9 +16,14 @@ const handler: RequestHandler = async (req, res, next) => {
     return next(error)
   }
 
-  const { username, password } = req.body
+  const username = req.body.username || ''
+  const password = req.body.password || ''
 
   const authError = new StatusError('Invalid login attempt. Incorrect username or password', 401)
+
+  if (!username || !password) {
+    return next(authError)
+  }
 
   const user: Schema.User = await db(USER)
     .select()
@@ -45,9 +50,7 @@ const handler: RequestHandler = async (req, res, next) => {
   }
   res.cookie('authentication', cookie, { signed: true })
 
-  res
-    .status(200)
-    .end()
+  res.status(200).end()
 }
 
 export default handler
